@@ -1,0 +1,33 @@
+/* You can add global styles to this file, and also import other style files */
+
+@import "~ng-pick-datetime/assets/style/picker.min.css";
+.row {
+  margin-top: 40px;
+  padding: 0 10px;
+}
+
+.clickable {
+  cursor: pointer;
+}
+
+.panel-heading div {
+  margin-top: -18px;
+  font-size: 15px;
+}
+
+.panel-heading div span {
+  margin-left: 5px;
+}
+
+.panel-body {
+  display: none;
+}
+
+.error-style {
+  color: red;
+  font-size: 10px;
+}
+
+.common-background {
+  background: #563d7c;
+}
