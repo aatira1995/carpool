@@ -1,0 +1,44 @@
+#originInput,
+#destinationInput,
+#journeyDate,
+#pickupRadius {
+  font-family: Roboto;
+  font-size: 15px;
+  font-weight: 300;
+  margin-left: 12px;
+  padding: 0 11px 0 13px;
+  text-overflow: ellipsis;
+}
+
+#originInput:focus,
+#destinationInput:focus,
+#journeyDate:focus,
+#pickupRadius:focus {
+  border: none;
+  border-bottom: white;
+}
+
+.controls {
+  padding: 15px 20px;
+  color: white;
+  font-family: Arial Narrow;
+  border: none;
+  border-bottom: 2px solid white;
+  background-color: transparent;
+}
+
+#googleMapForm {
+  margin-left: 50px;
+}
+
+#noResult {
+  width: 100%;
+}
+
+#googleMap {
+  width: 90%;
+  margin-top: 50px;
+  border-radius: 15px;
+  margin-left: auto;
+  margin-right: auto;
+}

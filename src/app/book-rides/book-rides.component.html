@@ -1,0 +1,76 @@
+<div class="container-fluid border-0 rounded common-background" style="margin-top:70px;">
+  <h3 class="card-title mb-5 text-white display-4 text-center">{{ appConstants.staticPageContent.bookRideTitle }}</h3>
+  <form class="form mt-5 p-5 text-center" [formGroup]='travelForm'>
+    <label for="InputSource" class="text-white">{{ appConstants.staticPageContent.source }}</label>
+    <input ngx-google-places-autocomplete type="text" class="controls mx-5 text-black" formControlName="origin" id="originInput"
+      maxlength="50" placeholder="Enter Your Source" required="true">
+    <app-errors [control]="travelForm.controls.origin"></app-errors>
+
+    <label for="InputDestination" class="text-white">{{ appConstants.staticPageContent.destination }}</label>
+    <input ngx-google-places-autocomplete type="text" class="controls mx-5" formControlName="destination" id="destinationInput"
+      maxlength="50" placeholder="Enter Your Destination" required="true">
+    <app-errors [control]="travelForm.controls.destination"></app-errors>
+
+    <label for="InputDate" class="text-white">{{ appConstants.staticPageContent.dateOfJourney }}</label>
+    <input [min]="todayDate" [max]="futureLimitDate" [owlDateTime]="dt" class="controls  text-center" #journeyDate id="journeyDate"
+      placeholder="mm/dd/yyyy" required="true" formControlName="date" (change)="getEnteredDate(journeyDate.value)">
+    <span class="trigger" [owlDateTimeTrigger]="dt">
+      <i class="fa fa-calendar"></i>
+    </span>
+    <owl-date-time [pickerType]="'calendar'" #dt></owl-date-time>
+    <div class="error-style" [hidden]="dateMissMatch === false">
+      {{ appConstants.staticPageContent.dateMissMatch }} {{ today }} {{ appConstants.staticPageContent.and }} {{ future }}
+    </div>
+    <br>
+    <label for="InputRadius" class="text-white">{{ appConstants.staticPageContent.searchRadius }}</label>
+    <input type="text" class="controls mx-5 mt-5" maxlength="1" formControlName="radius" id="pickupRadius" pattern="^[0-9]*$"
+      placeholder="Enter Pickup Radius(km)" required="true">
+    <app-errors [control]="travelForm.controls.radius"></app-errors>
+
+    <div class="text-center">
+      <button type="submit" class="btn btn-warning btn-lg m-5" [disabled]="travelForm.invalid" (click)='findRides()'>{{ appConstants.staticPageContent.findRideButton}}</button>
+    </div>
+
+    <div class="float-right">
+      <button type="submit" class="btn btn-danger mb-3" (click)='goToDashboard()'>{{ appConstants.staticPageContent.cancel }}</button>
+    </div>
+
+  </form>
+
+  <div [hidden]="rideFound" class=" container-fluid text-center mt-5" id="result"></div>
+  <div [hidden]="rideFound" class="container text-center">
+    <div id="googleMap" class="container-fluid m-5" style="height:380px;"></div>
+    <div class="mx-5 btn-lg m-3 mb-0 float-left text-white common-background" id="mybtn" *ngFor='let ride of showRides'>
+      <div *ngIf='ride.seatsAvailable !==0'>
+        {{ ride.fromLocation | uppercase }} &rarr; {{ ride.toLocation | uppercase }}
+        <br>
+        <br> {{ appConstants.staticPageContent.seatsAvailable }}: {{ ride.seatsAvailable }}
+        <br> {{ appConstants.staticPageContent.rideOwner }}: {{ ride.riderName }}
+        <br> {{ appConstants.staticPageContent.mobile }}: {{ ride.mob }}
+        <br> {{ appConstants.staticPageContent.vehicleName }}: {{ ride.vehicleName }}
+        <br> {{ appConstants.staticPageContent.vehicleNumber}}: {{ ride.vehicleNumber }}
+        <br>
+        <span class="WebRupee display-4">&#x20B9;{{ (ride.cost/ride.seatingCapacity) | number }}</span>
+        <br>
+        <button class="btn btn-success float-right mt-5" (click)='saveRideId(ride.rideId)' data-toggle="modal" data-target="#bookRideModal">{{ appConstants.staticPageContent.book }}</button>
+      </div>
+    </div>
+
+    <div class="modal fade" id="bookRideModal">
+      <div class="modal-dialog">
+        <div class="modal-content" style="width:150%; position:relative; right:100px;">
+
+          <!-- Modal body -->
+          <div class="modal-body text-center pt-5 mt-5">
+            <span class="navFontSize pt-5">{{ appConstants.bookingModalContent.bookingQuestion }}</span>
+          </div>
+          <hr>
+          <!-- Modal footer -->
+          <div class="modal-footer">
+            <button type="button" class="btn btn-outline-danger btn-lg w-50 mb-5" (click)='removeRideId()' data-dismiss="modal">{{ appConstants.bookingModalContent.bookingNo }}</button>
+            <button type="button" (click)="bookRide()" class="btn btn-success text-white btn-lg w-50 mb-5" data-dismiss="modal" style="cursor:pointer;">{{ appConstants.bookingModalContent.bookingYes }}</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

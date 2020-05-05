@@ -1,0 +1,54 @@
+.background {
+  background-color: dodgerblue;
+  padding-bottom: 20px;
+}
+
+.p-200 {
+  padding-left: 200px;
+  padding-right: 200px;
+}
+
+.mt-10 {
+  margin-top: 30px;
+}
+
+.clear {
+  clear: both;
+}
+
+.offerDiv {
+  display: inline;
+}
+
+.pb-10 {
+  padding-bottom: 10px;
+}
+
+.form-group {
+  display: inline;
+  font-family: Roboto;
+  font-size: 15px;
+  font-weight: 300;
+  margin-left: 12px;
+  background-color: transparent;
+}
+
+.offerInput {
+  padding: 0 11px 0 13px;
+  text-overflow: ellipsis;
+  border: none;
+  border-bottom: 2px solid white;
+  background-color: transparent;
+}
+
+.card-margin {
+  margin-top: 80px;
+}
+
+#googleMap {
+  width: 90%;
+  margin-top: 50px;
+  border-radius: 15px;
+  margin-left: auto;
+  margin-right: auto;
+}

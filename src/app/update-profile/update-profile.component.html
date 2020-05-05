@@ -1,0 +1,67 @@
+<div class="container mt-5 border-0 rounded common-background">
+  <div class="card-header">
+    <span class="card-title text-white display-4">{{ appConstants.staticPageContent.updateProfile }}</span>
+    <button class="btn btn-success mt-4 float-right" data-toggle="modal" data-target="#changePasswordModal">{{ appConstants.staticPageContent.changePassword }}</button>
+  </div>
+  <div class="card-block">
+    <div class="row">
+      <div class=" col-md-12 col-lg-12 p-300 ">
+        <form [formGroup]="updateForm">
+          <div class="form-group pt-2">
+            <label for="name" class="text-white">{{ appConstants.staticPageContent.name }}</label>
+            <input type="text" class="form-control" id="profileName" formControlName="name" required="true" pattern="[a-zA-Z][a-zA-Z ][a-zA-Z .][a-zA-Z.][a-zA-Z \-\.\']*"
+              minlength="3" maxlength="30" [ngModel]="profileFetched.name" (ngModelChange)="name">
+            <app-errors [control]="updateForm.controls.name"></app-errors>
+          </div>
+          <div class="form-group">
+            <label for="phone" class="text-white">{{ appConstants.staticPageContent.number }}</label>
+            <input type="text" class="form-control" id="profilePhone" formControlName="phone" required="true" minlength="10" maxlength="10"
+              pattern="[789][0-9]{9}" [ngModel]="profileFetched.phone" (ngModelChange)="phone">
+            <app-errors [control]="updateForm.controls.phone"></app-errors>
+          </div>
+          <div class="form-group">
+            <label for="address" class="text-white">{{ appConstants.staticPageContent.address }}</label>
+            <textarea class="form-control" id="profileAddress" formControlName="address" maxlength="50" [ngModel]="profileFetched.address"
+              (ngModelChange)="address"></textarea>
+            <app-errors [control]="updateForm.controls.address"></app-errors>
+          </div>
+          <button type="submit" class="btn btn-danger mb-4 float-left" (click)="cancelUpdation(updateForm)">{{ appConstants.staticPageContent.cancel}}</button>
+          <button type="submit" class="btn btn-primary mb-4 float-right" [disabled]="updateForm.invalid" (click)="onProfileUpdate(updateForm)">{{ appConstants.staticPageContent.updateButton }}</button>
+        </form>
+
+        <div id="changePasswordModal" class="modal" role="dialog">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h3 class="modal-title">{{ appConstants.staticPageContent.changePassword }}</h3>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+              </div>
+              <div class="modal-body">
+                <form [formGroup]="changePasswordForm">
+                  <div class="form-group">
+                    <label for="password">{{ appConstants.staticPageContent.password }}</label>
+                    <show-hide-password size="" icon="fontawesome">
+                      <input type="password" class="form-control" id="updatePassword" formControlName="password" required="true" minlength="8"
+                        maxlength="15" (ngModelChange)="password">
+                    </show-hide-password>
+                    <app-errors [control]="changePasswordForm.controls.password"></app-errors>
+                  </div>
+                  <div class="form-group">
+                    <label for="newPassword">{{ appConstants.staticPageContent.newPassword }}</label>
+                    <show-hide-password size="" icon="fontawesome">
+                      <input type="password" class="form-control" id="updateNewPassword" formControlName="newPassword" required="true" minlength="8"
+                        maxlength="15" (ngModelChange)="newPassword">
+                    </show-hide-password>
+                    <app-errors [control]="changePasswordForm.controls.newPassword"></app-errors>
+                  </div>
+                  <button type="submit" class="btn btn-primary mb-4 float-left" data-dismiss="modal" [disabled]="changePasswordForm.invalid"
+                    (click)="changePassword(changePasswordForm)">{{ appConstants.staticPageContent.updateButton }}</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

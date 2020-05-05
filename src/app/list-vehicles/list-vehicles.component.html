@@ -1,0 +1,90 @@
+<div class="container">
+  <h1>{{ appConstants.staticPageContent.listVehicles }}</h1>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="panel panel-primary">
+        <div class="panel-heading">
+          <button class="btn btn-default float-right" data-toggle="modal" data-target="#vehicleDetailsAddModal" [disabled]="equalToFive">{{ appConstants.staticPageContent.add }}</button>
+          <h3 class="panel-title">{{ appConstants.staticPageContent.vehicles }}</h3>
+        </div>
+        <div class="panel-body">
+          <input type="text" class="form-control" id="dev-vehicleTable-filter" data-action="filter" data-filters="#dev-vehicleTable"
+          />
+        </div>
+        <table class="table table-hover" id="dev-vehicleTable">
+          <thead>
+            <tr>
+              <th>{{ appConstants.staticPageContent.vehicleNumber }}</th>
+              <th>{{ appConstants.staticPageContent.vehicleName }}</th>
+              <th>{{ appConstants.staticPageContent.seatCapacity }}</th>
+              <th>{{ appConstants.staticPageContent.action}}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngIf="vehicles.length === 0">
+              <h3>{{ appConstants.staticPageContent.noVehicles }}</h3>
+            </tr>
+            <tr *ngFor=" let vehicle of vehicles">
+              <td>{{ vehicle.vehicleNumber }}</td>
+              <td>{{ vehicle.vehicleName }}</td>
+              <td>{{ vehicle.seatsAvailable }}</td>
+              <td>
+                <button class="btn btn-danger btn-xs " (click)="passVehicleId(vehicle.id)">{{ appConstants.staticPageContent.deleteButton }}</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <button #deleteVehicleModal data-toggle="modal" data-target="#confirmDeleteVehicleModal" [hidden]="hideModalButton"></button>
+    <div id="confirmDeleteVehicleModal" class="modal" role="dialog">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-body">
+            <h3>{{ appConstants.staticPageContent.confirmVehicleDeleteMessage }}</h3>
+            <button class="btn btn-primary btn-sm" data-dismiss="modal">{{ appConstants.staticPageContent.deleteNo }}</button>
+            <button class="btn btn-primary btn-sm" (click)="deleteVehicle()" data-dismiss="modal">{{ appConstants.staticPageContent.deleteYes }}</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal" id="vehicleDetailsAddModal">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h3 class="card-title">{{ appConstants.staticPageContent.vehicleDetailsTitle }}</h3>
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+          </div>
+          <div class="modal-body">
+            <form [formGroup]="vehicleDetailsForm">
+              <div class="form-group pt-3">
+                <label for="vehicleNumber">{{ appConstants.staticPageContent.vehicleNumber }}</label>
+                <input type="text" class="form-control" id="addVehicleNumber" formControlName="vehicleNumber" required="true" maxlength="15">
+                <app-errors [control]="vehicleDetailsForm.controls.vehicleNumber"></app-errors>
+              </div>
+              <div class="form-group">
+                <label for="vehicleName">{{ appConstants.staticPageContent.vehicleName }}</label>
+                <input type="text" class="form-control" id="addVehicleName" formControlName="vehicleName" required="true" maxlength="30">
+                <app-errors [control]="vehicleDetailsForm.controls.vehicleName"></app-errors>
+              </div>
+              <div class="form-group">
+                <label for="seatingCapacity">{{ appConstants.staticPageContent.seatCapacity }}</label>
+                <input type="text" class="form-control" id="addVehicleSeatsAvailable" formControlName="seatsAvailable" required="true" pattern="^[0-9]*$"
+                  maxlength="1">
+                <app-errors [control]="vehicleDetailsForm.controls.seatsAvailable"></app-errors>
+              </div>
+              <div>
+                <button type="submit" class="btn btn-primary mb-4 float-right" data-dismiss="modal" [disabled]="vehicleDetailsForm.invalid"
+                  (click)="onVehicleDetailsSubmit(vehicleDetailsForm)">{{ appConstants.staticPageContent.submitButton }}</button>
+              </div>
+              <div class="clear"></div>
+            </form>
+          </div>
+        </div>
+      </div>
+      <div class="clear"></div>
+    </div>
+  </div>
+</div>

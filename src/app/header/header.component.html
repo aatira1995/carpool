@@ -1,0 +1,97 @@
+<nav class="container-fluid navbar navbar-expand-sm navbar-dark common-background">
+  <ul class="container-fluid navbar-nav">
+    <li class="nav-item">
+      <a class="nav-link  border-0 rounded px-3" [routerLink]="staticPageContent.dashboard" routerLinkActive='active'>
+        <span class="navFontSize">{{ staticPageContent.headerNavbarContent.link1 }}</span>
+      </a>
+    </li>
+    <li class="nav-item m-0">
+      <a class="nav-link  border-0 rounded px-3" href='#' data-toggle="modal" data-target="#myAboutUsModal">
+        <span class="navFontSize">{{ staticPageContent.headerNavbarContent.link2 }}</span>
+      </a>
+    </li>
+    <a class="navbar-brand" href="#">
+      <img [src]="staticPageContent.carPoolLogo" alt="logo" class="img-fluid float-center" style="height:120px; position:relative; top:-20px; left:50px;">
+    </a>
+
+    <li class="nav-item">
+      <a class="nav-link  border-0 rounded px-3" [routerLink]="staticPageContent.listRide">
+        <span class="navFontSize">{{ staticPageContent.headerNavbarContent.link3 }}</span>
+      </a>
+    </li>
+
+    <div class="dropdown">
+      <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <span class="navFontSize">Hi, {{ loginData.data.name }}</span>
+      </button>
+      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+        <a class="dropdown-item" [routerLink]="staticPageContent.account" routerLinkActive='active' style="cursor:pointer;">
+          <span class="navFontSize">{{ staticPageContent.headerDropdownContent.link1 }}</span>
+        </a>
+        <a class="dropdown-item" href="#" [routerLink]="staticPageContent.listVehicles" routerLinkActive='active'>
+          <span class="navFontSize">{{ staticPageContent.headerDropdownContent.link4 }}</span>
+        </a>
+        <a class="dropdown-item" [routerLink]="staticPageContent.dashboard" routerLinkActive='active' style="cursor:pointer;">
+          <span class="navFontSize">{{ staticPageContent.headerDropdownContent.link3 }}</span>
+        </a>
+        <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+          <span class="navFontSize">{{ staticPageContent.headerDropdownContent.link2 }}</span>
+        </a>
+      </div>
+    </div>
+  </ul>
+</nav>
+
+<!-- The About Us Modal-->
+<div class="modal fade" id="myAboutUsModal">
+  <div class="modal-dialog">
+    <div class="modal-content" style="width:150%; position:relative; right:100px;">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">
+          <span class="display-4 pl-5 pt-5">{{ staticPageContent.headerModalContent.title }}</span>
+        </h4>
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body text-center">
+        <img [src]="staticPageContent.carPoolLogo" alt="logo" class="img-fluid float-right" style="height:80%">
+        <p class="text-justify p-5" style="font-size:1.4em">
+          CarPool is a trusted community marketplace that connects drivers with empty seats to co-travellers looking for a ride. Over
+          12 million people use BlaBlaCar every quarter creating an entirely new, people-powered network. With a dedicated
+          customer service, a state of the art web and mobile platform, and a fast-growing community of users, BlaBlaCar
+          is making travel social, money-saving and more efficient for millions of members.
+        </p>
+      </div>
+
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger m-5 px-5" data-dismiss="modal">{{ staticPageContent.headerModalContent.closeButton }}</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- Logout Modal -->
+<div class="modal fade" id="logoutModal">
+  <div class="modal-dialog">
+    <div class="modal-content" style="width:150%; position:relative; right:100px;">
+
+      <!-- Modal body -->
+      <div class="modal-body text-center pt-5 mt-5">
+        <span class="navFontSize pt-5">{{ staticPageContent.logoutModalContent.logoutQuestion}}</span>
+      </div>
+      <hr>
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-warning btn-lg w-50 mb-5" data-dismiss="modal">{{ staticPageContent.logoutModalContent.logoutNo }}</button>
+        <button type="button" (click)="logout()" class="btn btn-outline-success btn-lg w-50 mb-5" data-dismiss="modal" style="cursor:pointer;">{{ staticPageContent.logoutModalContent.logoutYes }}</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<router-outlet></router-outlet>

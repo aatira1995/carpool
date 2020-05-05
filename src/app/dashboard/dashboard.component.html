@@ -1,0 +1,70 @@
+<div class="container">
+  <button type='button' class="btn btn-outline-info w-25 mt-5 float-left p-3 ml-0" (click)='gotoOfferRIdes()' style="border: 2px solid #1da2b8">
+    {{ appConstants.staticPageContent.offerRidesTitle }}
+  </button>
+  <button class="btn btn-outline-info w-25 mt-5 float-right p-3" (click)='gotoBookRIdes()' style="border: 2px solid #1da2b8;">
+    {{ appConstants.staticPageContent.bookRidesTitle }}
+  </button>
+</div>
+
+<div class="text-center mt-5">
+  <div class="container">
+    <img [src]="appConstants.dashboard1" alt="Blue Theme" class="img-fluid mt-5 w-100">
+  </div>
+</div>
+
+<div class="text-center container-fluid">
+  <div class="container-fluid">
+    <img [src]="appConstants.howItWorks" alt="How it Works" class="img-fluid mt-5 mb-5">
+  </div>
+</div>
+
+<div id="accordion" class="container mt-2" role="tablist" aria-multiselectable="true">
+
+  <div class="card bg-info text-white mb-5" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true"
+    aria-controls="collapseOne" style="border:0 solid; border-radius:10px; cursor:pointer;">
+    <div class="card-header text-center" role="tab" id="headingOne">
+      <h2 class="m-3">
+        <a class="text-white" style="text-decoration:none;">
+          {{ appConstants.staticPageContent.offerRidesTitle }}
+        </a>
+      </h2>
+    </div>
+
+    <div id="collapseOne" class="collapse p-5 bg-dark" role="tabpanel" aria-labelledby="headingOne" style="border:0 solid; border-radius:10px">
+      <div class="card-block text-center">
+        <h3 class="text-justify">
+          Verified member profiles and ratings mean you know exactly who you're travelling with. Government ID verification adds another
+          level of security to member profiles. No need to travel across town, catch a ride leaving near you.
+        </h3>
+      </div>
+      <button class="btn btn-info float-right p-4 rideButton" style="border:0 solid; border-radius: 10px;">
+        <a [routerLink]="appConstants.offerRide">{{ appConstants.staticPageContent.offerRidesTitle }}</a>
+      </button>
+    </div>
+  </div>
+
+  <div class="card bg-info mb-5 text-white" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false"
+    aria-controls="collapseTwo" style="text-decoration:none;border:0 solid; border-radius:10px; cursor:pointer;">
+    <div class="card-header text-center" role="tab" id="headingTwo">
+      <h2 class="m-3">
+        <a class="collapsed" class="text-white">
+          {{ appConstants.staticPageContent.bookRidesTitle }}
+        </a>
+      </h2>
+    </div>
+
+    <div id="collapseTwo" class="collapse p-5 bg-dark mb-5" role="tabpanel" aria-labelledby="headingTwo" style="border:0 solid; border-radius:10px">
+      <div class="card-block text-center ">
+        <h3 class="text-justify">
+          Just enter your departure and arrival points and your travel date, then choose a car owner going your way. If you have a
+          question, you can ask the car owner before booking.Book your seat online. You’ll get the car owner's phone number
+          to arrange the final details.Bring exact change to pay the car owner the agreed contribution during the ride.
+        </h3>
+      </div>
+      <button class="btn btn-success float-right p-4 rideButton text-white" style="border:0 solid; border-radius: 10px;">
+        <a [routerLink]="appConstants.bookRide">{{ appConstants.staticPageContent.bookRidesTitle}}</a>
+      </button>
+    </div>
+  </div>
+</div>

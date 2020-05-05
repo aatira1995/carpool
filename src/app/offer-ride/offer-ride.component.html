@@ -1,0 +1,127 @@
+<div class="container-fluid border-0 rounded text-center card-margin common-background">
+  <h3 class="card-title mb-5 text-white display-4" style="padding-bottom:50px;">{{ appConstants.staticPageContent.offerRideTitle }}</h3>
+
+  <form [formGroup]="offerRideForm" class="mt-5">
+
+    <div class="formGroup form-group text-white m-4">
+      <select class="offerInput text-center common-background" [(ngModel)]="ride.vehicleId" (ngModelChange)="getSeatCapacity($event)"
+        #vehicle required="true" formControlName="vehicleId" name="vehicleList">
+        <option class="common-background" value='' disabled selected class="text-black">{{ appConstants.staticPageContent.selectYourVehicleTag }}</option>
+        <option class="common-background" *ngFor="let vehicle of vehicles" #vehicleOption [value]="vehicle.id">{{ vehicle.vehicleName }}</option>
+      </select>
+      <app-errors [control]="offerRideForm.controls.vehicleId"></app-errors>
+    </div>
+
+    <div class="form-group text-white m-4">
+      <input ngx-google-places-autocomplete type="text" class="offerInput text-center" id="source" formControlName="fromLocation"
+        required="true" maxlength="50" placeholder="Enter Source" [(ngModel)]="ride.fromLocation">
+      <app-errors [control]="offerRideForm.controls.fromLocation"></app-errors>
+    </div>
+
+    <div class="form-group text-white m-4">
+      <input ngx-google-places-autocomplete type="text" class="offerInput text-center" id="destination" formControlName="toLocation"
+        required="true" maxlength="50" placeholder="Enter Destination" [(ngModel)]="ride.toLocation">
+      <app-errors [control]="offerRideForm.controls.toLocation"></app-errors>
+    </div>
+
+    <div class="form-group text-white m-4">
+      <input ngx-google-places-autocomplete type="text" class="offerInput text-center" id="checkPoint" formControlName="checkpoints"
+        required="false" maxlength="200" placeholder="Enter CheckPoint" [(ngModel)]="ride.checkpoints">
+      <app-errors [control]="offerRideForm.controls.checkpoints"></app-errors>
+    </div>
+
+    <div class="form-group text-white mx-4">
+      <input type="text" class="offerInput text-center" id="seatsAvailable" formControlName="seatsAvailable" required="true" pattern="^[0-9]*$"
+        maxlength="1" placeholder="Allowable # of passengers" [(ngModel)]="ride.seatsAvailable" (change)="getCoTravellersNumber($event.target.value)">
+      <div class="error-style" [hidden]="seatMissMatch === false">
+        {{ appConstants.staticPageContent.seatNumberMissMatch }}
+      </div>
+    </div>
+
+    <div class="form-group text-white m-4">
+      <input type="text" class="offerInput text-center" name="cost" id="cost" formControlName="cost" required="true" pattern="^[0-9]*$"
+        maxlength="4" placeholder="Cost/Head" [(ngModel)]="ride.cost">
+      <app-errors [control]="offerRideForm.controls.cost"></app-errors>
+    </div>
+
+    <div class="form-group text-white mb-4">
+      <input [min]="currentDate" [max]="maxDate" [owlDateTime]="dtLocal" class="offerInput text-center rideDate" #rideDate id="rideDate"
+        formControlName="rideDate" required="true" placeholder="mm/dd/yyyy, hour:minute period" [(ngModel)]="ride.rideDate"
+        (focusout)="getEnteredDate(rideDate.value)">
+      <span class="trigger" [owlDateTimeTrigger]="dtLocal">
+        <i class="fa fa-calendar"></i>
+      </span>
+      <owl-date-time #dtLocal></owl-date-time>
+      <div class="error-style" [hidden]="dateMissMatch === false">
+        {{ appConstants.staticPageContent.dateMissMatch }} {{ today }} {{ appConstants.staticPageContent.and }} {{ future }}
+      </div>
+    </div>
+
+    <div class="pt-5 text-center">
+      <button type="submit" class="btn btn-warning btn-lg m-4" [disabled]="offerRideForm.invalid" (click)="onCreateNewRide(offerRideForm)">{{ appConstants.staticPageContent.offerButton }}</button>
+    </div>
+
+    <div>
+      <button type="submit" class="btn btn-danger mb-4 float-right" (click)="cancelOffering(offerRideForm)">{{ appConstants.staticPageContent.cancel}}</button>
+    </div>
+
+  </form>
+
+  <div>
+
+    <button type="button" class="btn btn-success mb-4 float-left" data-toggle="modal" data-target="#vehicleDetailsModal" [disabled]="equalToFive">{{ appConstants.staticPageContent.vehicleDetailsModal }}</button>
+  </div>
+  <div class="clear"></div>
+
+  <div class="modal" id="vehicleDetailsModal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 class="card-title">{{ appConstants.staticPageContent.vehicleDetailsTitle }}</h3>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        <div class="modal-body">
+          <form [formGroup]="vehicleDetailsForm">
+            <div class="form-group pt-3">
+              <label for="vehicleNumber">{{ appConstants.staticPageContent.vehicleNumber }}</label>
+              <input type="text" class="form-control" id="createVehicleNumber" formControlName="vehicleNumber" required="true" maxlength="15">
+              <app-errors [control]="vehicleDetailsForm.controls.vehicleNumber"></app-errors>
+            </div>
+            <div class="form-group">
+              <label for="vehicleName">{{ appConstants.staticPageContent.vehicleName }}</label>
+              <input type="text" class="form-control" id="createVehicleName" formControlName="vehicleName" required="true" maxlength="30">
+              <app-errors [control]="vehicleDetailsForm.controls.vehicleName"></app-errors>
+            </div>
+            <div class="form-group">
+              <label for="seatingCapacity">{{ appConstants.staticPageContent.seatCapacity }}</label>
+              <input type="text" class="form-control" id="createVehicleSeatsAvailable" formControlName="seatsAvailable" required="true"
+                maxlength="1" pattern="^[0-9]*$">
+              <app-errors [control]="vehicleDetailsForm.controls.seatsAvailable"></app-errors>
+            </div>
+            <div>
+              <button type="submit" class="btn btn-primary mb-4 float-right" data-dismiss="modal" [disabled]="vehicleDetailsForm.invalid"
+                (click)="onVehicleDetailsSubmit(vehicleDetailsForm)">{{ appConstants.staticPageContent.submitButton }}</button>
+            </div>
+            <div class="clear"></div>
+          </form>
+        </div>
+      </div>
+      <div>
+
+
+        <div class="clear"></div>
+      </div>
+    </div>
+  </div>
+  <div class="container-fluid mt-5 mb-5 text-center" id=costAlert></div>
+  <div class="container-fluid">
+    <div id="googleMap" class="m-5 w-25 float-right" style="height:380px;"></div>
+    <div id="routeInfo" class="m-5 p-5 w-50  border-0 rounded text-white common-background" *ngIf='offeredRideData'>
+      <span class="display-4">{{ offeredRideData.fromLocation | uppercase }}&rarr;{{ offeredRideData.toLocation | uppercase }}</span>
+      <br> {{appConstants.staticPageContent.distance}}: {{ distance }} {{appConstants.staticPageContent.distanceUnit}}
+      <br> {{ appConstants.staticPageContent.costPerHead }}: {{ offeredRideData.cost }}
+      <br> {{ appConstants.staticPageContent.rideDate }}: {{ offeredRideData.rideDate | date:'full' }}
+      <br>
+      <button class="btn btn-success m-4" (click)='goToListRides()'>{{ appConstants.staticPageContent.listRides }}</button>
+    </div>
+  </div>

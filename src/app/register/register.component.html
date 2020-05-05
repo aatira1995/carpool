@@ -1,0 +1,83 @@
+<div class="container-fluid text-center common-background">
+  <img [src]="appConstants.carPoolLogo" class="img-fluid mt-0" style="height:120px; position:relative; top:30px">
+</div>
+
+<div class="container text-center mt-5">
+  <span class="display-3 text-center">{{ appConstants.staticPageContent.tagline }}</span>
+</div>
+
+<div class="container-fluid float-left text-center">
+  <div *ngIf="registerForm" class="col-md-4 inputGroupContainer float-right">
+    <form [formGroup]="registerForm" class="pb-5">
+      <h2>
+        {{ appConstants.staticPageContent.registerFormTitle }}
+      </h2>
+      <div class="form-group pt-2">
+        <label for="name" class="float-left">{{ appConstants.staticPageContent.name }}</label>
+        <div class="input-group">
+          <span class="input-group-addon">
+            <i class="glyphicon glyphicon-user"></i>
+          </span>
+          <input type="text" class="form-control" id="name" formControlName="name" required="true" pattern="[a-zA-Z][a-zA-Z ][a-zA-Z .][a-zA-Z.][a-zA-Z \-\.\']*"
+            minlength="3" maxlength="30" placeholder="Name">
+        </div>
+        <app-errors [control]="registerForm.controls.name"></app-errors>
+      </div>
+      <div class="form-group">
+        <label for="email" class="float-left">{{ appConstants.staticPageContent.email }}</label>
+        <div class="input-group">
+          <span class="input-group-addon">
+            <i class="glyphicon glyphicon-envelope"></i>
+          </span>
+          <input type="email" class="form-control" id="email" formControlName="email" required="true" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"
+            placeholder="Email">
+        </div>
+        <app-errors [control]="registerForm.controls.email"></app-errors>
+      </div>
+      <div class="form-group">
+        <label for="phone" class="float-left">{{ appConstants.staticPageContent.number }}</label>
+        <div class="input-group">
+          <span class="input-group-addon">
+            <i class="glyphicon glyphicon-phone"></i>
+          </span>
+          <input type="text" class="form-control" id="phone" formControlName="phone" required="true" minlength="10" maxlength="10"
+            pattern="[789][0-9]{9}" placeholder="Mobile Number">
+        </div>
+        <app-errors [control]="registerForm.controls.phone"></app-errors>
+      </div>
+      <div>
+        <div class="form-group">
+          <label for="pwd" class="float-left">{{ appConstants.staticPageContent.password }}</label>
+          <div class="input-group">
+            <span class="input-group-addon">
+              <i class="glyphicon glyphicon-lock"></i>
+            </span>
+            <input type="password" class="form-control" id="pwd" formControlName="password" required="true" minlength="8" maxlength="15"
+              #password (blur)="getPassword(password.value)" (ngChange)="isPasswordMatch = false;" placeholder="Password">
+          </div>
+          <app-errors [control]="registerForm.controls.password"></app-errors>
+        </div>
+        <div class="form-group">
+          <label for="pwd" class="float-left">{{ appConstants.staticPageContent.confirmPassword }}</label>
+          <div class="input-group">
+            <span class="input-group-addon">
+              <i class="glyphicon glyphicon-lock"></i>
+            </span>
+            <input type="password" class="form-control" id="cpwd" formControlName="confirmPassword" required="true" #confirmPassword
+              (blur)="getConfirmPassword(confirmPassword.value)" (focusout)="checkForPasswordsMatch()" placeholder="Enter Password Again">
+          </div>
+          <div class="m-3 float-right" style="color:red; font-size:10px" [hidden]="isPasswordMatch === true">{{ appConstants.staticPageContent.passwordMismatchMessage }}</div>
+        </div>
+      </div>
+      <button type="submit" class="btn btn-success m-4 float-left" [disabled]="registerForm.invalid" (click)="onRegisterFormSubmit(registerForm)">{{ appConstants.staticPageContent.submitButton }}</button>
+
+      <br>
+      <span class="mb-3 float-left">{{ appConstants.staticPageContent.loginQuestion }}
+        <a class="" [routerLink]="appConstants.login" routerLinkActive='active'>{{ appConstants.staticPageContent.loginLink }}</a>
+      </span>
+    </form>
+  </div>
+  <br>
+
+</div>
+<img [src]='appConstants.landingPageLogo' class="img-fluid mt-0 w-100">
